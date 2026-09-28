@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NOVA — Type Like It Matters</title>
+    <meta name="description" content="NOVA custom mechanical keyboards. Gasket-mount, hot-swap, RGB. Type Like It Matters." />
+    <script>
+      // Boot probe: surfaces pre-mount failures as on-screen text
+      // (a React boundary can't catch those — React never mounted).
+      window.__novaErrors = [];
+      window.addEventListener('error', function (e) {
+        window.__novaErrors.push(String((e && e.message) || (e && e.error) || e));
+        var el = document.getElementById('nova-boot-error');
+        if (!el) {
+          el = document.createElement('pre');
+          el.id = 'nova-boot-error';
+          el.style.cssText =
+            'position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#7f1d1d;color:#fff;padding:12px;font:12px/1.5 monospace;white-space:pre-wrap;margin:0';
+          document.body.appendChild(el);
+        }
+        el.textContent = 'NOVA boot error:\n' + window.__novaErrors.join('\n');
+      });
+      setTimeout(function () {
+        var root = document.getElementById('root');
+        if (root && !root.hasChildNodes()) {
+          var el = document.createElement('div');
+          el.style.cssText =
+            'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#71717a;font:14px monospace;z-index:99998;padding:24px;text-align:center';
+          el.textContent =
+            'NOVA: React did not mount within 8s. ' +
+            (window.__novaErrors[0] || 'No window error captured — open DevTools console (F12).');
+          document.body.appendChild(el);
+        }
+      }, 8000);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

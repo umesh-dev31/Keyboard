@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --color-void: #141412;
+  --color-accent: #7B9EC4;
+  --color-accent-hover: #6B8CAE;
+  --color-cream: #F3EEE4;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+html, body {
+  background: #141412;
+  color: #f4f4f5;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* z-0 : dark radial gradient behind everything — warmer charcoal tones */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 600px at 50% -10%, rgba(123,158,196,0.06), transparent 60%),
+    radial-gradient(900px 700px at 85% 40%, rgba(243,238,228,0.03), transparent 60%),
+    radial-gradient(1200px 900px at 50% 110%, rgba(0,0,0,0.9), transparent 60%),
+    #141412;
+}
+
+::selection {
+  background: rgba(243,238,228,0.85);
+  color: #141412;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #141412; }
+::-webkit-scrollbar-thumb { background: #2a2a28; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a38; }
+
+.overline-condensed {
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* Ghost text — constrained to top 40vh so it never overlaps the
+   keyboard's lower-right mass. Opacity kept at ~0.04 via stroke only. */
+.ghost-text {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  -webkit-text-stroke: 1px rgba(243,238,228,0.04);
+  color: transparent;
+  user-select: none;
+  max-height: 40vh;
+  overflow: hidden;
+}
+
+.text-glow {
+  text-shadow: 0 0 24px currentColor;
+}
+
+/* Section scrims are now rendered as inline aria-hidden divs in JSX,
+   not via this class, so layout flow is never disrupted. */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
